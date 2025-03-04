@@ -1,84 +1,142 @@
-# Turborepo starter
+# CrewAI Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+A web-based platform for dynamically creating, managing, and deploying AI crews with a user-friendly interface and Docker Swarm deployment capabilities.
 
-## Using this example
+## Overview
 
-Run the following command:
+CrewAI Platform enables users to:
+- Create and manage AI crews through a web interface
+- Configure and deploy custom AI agents
+- Manage tasks and workflows
+- Monitor crew performance and resource usage
+- Self-host the platform using Docker Swarm
 
-```sh
-npx create-turbo@latest
-```
+## Architecture
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+The platform uses a modern microservices architecture:
 
 ```
-cd my-turborepo
-pnpm build
+├── apps/
+│   ├── web/          # Next.js frontend application
+│   ├── api/          # FastAPI backend service
+│   └── chatbot/      # AI interaction service
+├── packages/
+│   ├── ui/           # Shared UI components
+│   ├── auth/         # Authentication utilities
+│   ├── db/           # Database utilities
+│   └── config/       # Shared configuration
+├── crews/            # Crew definitions and templates
+└── docs/             # Project documentation
 ```
 
-### Develop
+## Core Features
 
-To develop all apps and packages, run the following command:
+1. User Authentication & Management
+   - JWT-based authentication
+   - Role-based access control
+   - User profile management
 
+2. Crew Management
+   - Create/edit/delete crews
+   - Configure crew parameters
+   - Crew templates
+
+3. Agent Configuration
+   - Custom agent creation
+   - Role definition
+   - Parameter configuration
+
+4. Task Management
+   - Task creation and assignment
+   - Dependency management
+   - Progress monitoring
+
+5. Resource Management
+   - API key management
+   - Resource monitoring
+   - Usage analytics
+
+## Getting Started
+
+### Prerequisites
+- Docker and Docker Swarm
+- Node.js 18+
+- Python 3.8+
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-org/crewai-platform.git
+cd crewai-platform
 ```
-cd my-turborepo
-pnpm dev
+
+2. Install dependencies:
+```bash
+bun install
 ```
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+3. Set up environment variables:
+```bash
+cp .env.example .env
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+4. Start development environment:
+```bash
+bun run dev
 ```
 
-## Useful Links
+### Docker Deployment
 
-Learn more about the power of Turborepo:
+1. Build images:
+```bash
+docker compose build
+```
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+2. Initialize swarm:
+```bash
+docker swarm init
+```
+
+3. Deploy stack:
+```bash
+docker stack deploy -c docker-compose.yml crewai
+```
+
+## Development
+
+### Project Structure
+
+- `apps/web`: Frontend application
+- `apps/api`: Backend API service
+- `apps/chatbot`: AI interaction service
+- `packages/*`: Shared utilities and components
+- `crews/*`: Crew definitions and templates
+- `docs/*`: Documentation
+
+### Commands
+
+- `bun run dev`: Start development environment
+- `bun run build`: Build all packages and apps
+- `bun run test`: Run tests
+- `bun run lint`: Run linting
+- `bun run deploy`: Deploy to Docker Swarm
+
+## Documentation
+
+- [Architecture Overview](./docs/architecture.md)
+- [API Documentation](./docs/api.md)
+- [Deployment Guide](./docs/deployment.md)
+- [User Manual](./docs/user_manual.md)
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
+
+## License
+
+[MIT License](LICENSE)

@@ -1,28 +1,43 @@
 {
-  "name": "crew-ai-agency",
-  "version": "1.0.0",
+  "name": "crewai-platform",
+  "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "build": "turbo build",
+    "dev": "turbo dev --parallel",
+    "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "test": "turbo test",
+    "clean": "turbo clean && rm -rf node_modules",
+    "db:migrate": "turbo db:migrate",
+    "db:generate": "turbo db:generate",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "dev:web": "turbo dev --filter web...",
+    "dev:api": "turbo dev --filter api...",
+    "dev:chatbot": "turbo dev --filter chatbot...",
+    "dev:worker": "turbo dev --filter worker...",
+    "deploy:prod": "docker stack deploy -c docker-compose.yml crewai",
+    "deploy:remove": "docker stack rm crewai"
   },
   "devDependencies": {
-    "prettier": "^3.5.3",
-    "turbo": "^2.4.4",
-    "typescript": "5.8.2"
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.0",
+    "turbo": "latest",
+    "typescript": "^5.3.0"
   },
+  "packageManager": "bun@1.0.26",
   "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "bun@1.2.4",
-  "workspaces": [
-        "packages/*",
-        "apps/web"
-      ],
-  "dependencies": {
-    "mongoose": "^8.12.0"
+    "node": ">=18.0.0",
+    "bun": ">=1.0.0"
   }
 }

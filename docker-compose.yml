@@ -1,0 +1,136 @@
+services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.swarm=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - traefik-public
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  web:
+    image: ${REGISTRY:-localhost}/crewai-web:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    networks:
+      - traefik-public
+      - backend
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.web.rule=PathPrefix(`/`)"
+        - "traefik.http.services.web.loadbalancer.server.port=3000"
+
+  api:
+    image: ${REGISTRY:-localhost}/crewai-api:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    networks:
+      - backend
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/crewai
+      - REDIS_URL=redis://redis:6379
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.api.rule=PathPrefix(`/api`)"
+        - "traefik.http.services.api.loadbalancer.server.port=8000"
+
+  chatbot:
+    image: ${REGISTRY:-localhost}/crewai-chatbot:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: apps/chatbot/Dockerfile
+    networks:
+      - backend
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/crewai
+      - REDIS_URL=redis://redis:6379
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.chatbot.rule=PathPrefix(`/ws`)"
+        - "traefik.http.services.chatbot.loadbalancer.server.port=8001"
+
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=crewai
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  worker:
+    image: ${REGISTRY:-localhost}/crewai-worker:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: apps/worker/Dockerfile
+    networks:
+      - backend
+    environment:
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/crewai
+      - REDIS_URL=redis://redis:6379
+    deploy:
+      replicas: 2
+
+volumes:
+  db-data:
+  redis-data:
+
+  gradio:
+    image: ${REGISTRY:-localhost}/crewai-gradio:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: apps/gradio/Dockerfile
+    networks:
+      - backend
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - API_URL=http://api:8000
+      - WS_URL=ws://chatbot:8001
+    deploy:
+      replicas: 2
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.gradio.rule=PathPrefix(`/gradio`)"
+        - "traefik.http.services.gradio.loadbalancer.server.port=7860"
+
+networks:
+  traefik-public:
+    external: true
+  backend:
+    driver: overlay
+    internal: true

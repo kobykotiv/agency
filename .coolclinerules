@@ -1,0 +1,37 @@
+# CoolCline Database Configuration Rules
+# Version: 1.0.0
+# Maintained by CoolCline Agents
+
+# === Atlas MongoDB Configuration ===
+MONGODB_ATLAS_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>
+MONGODB_ATLAS_POOL_CONFIG={
+    MIN_SIZE: 0,
+    MAX_SIZE: 10,
+    SELECTION_TIMEOUT_MS: 5000
+}
+
+# === Local MongoDB Configuration ===
+MONGODB_LOCAL_URI=mongodb://localhost:27017/<dbname>
+MONGODB_LOCAL_POOL_CONFIG={
+    MIN_SIZE: 5,
+    MAX_SIZE: 50,
+    SELECTION_TIMEOUT_MS: 3000
+}
+
+# === Core Database Behaviors ===
+DATABASE_OPERATIONS={
+    MAX_BATCH_SIZE: 1000,
+    VALIDATION: true,
+    LOGGING: true
+}
+
+# === Consistency Settings ===
+CONSISTENCY_CONFIG={
+    READ_CONCERN: majority,
+    WRITE_CONCERN: majority
+}
+
+# === Connection Mode ===
+# Agents will use this to determine connection type
+# Options: 'atlas' | 'local' | 'demo'
+ACTIVE_CONNECTION=demo

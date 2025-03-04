@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User management
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  role      Role     @default(USER)
+  apiKeys   ApiKey[]
+  crews     Crew[]
+  tasks     Task[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  MODERATOR
+  USER
+}
+
+// API Key management
+model ApiKey {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lastUsed  DateTime?
+  createdAt DateTime @default(now())
+  expiresAt DateTime?
+
+  @@map("api_keys")
+}
+
+// Crew management
+model Crew {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  config      Json
+  agents      Agent[]
+  tasks       Task[]
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  isTemplate  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("crews")
+}
+
+// Agent management
+model Agent {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  description String?
+  config      Json
+  crewId      String
+  crew        Crew     @relation(fields: [crewId], references: [id], onDelete: Cascade)
+  tools       Tool[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("agents")
+}
+
+// Tool management
+model Tool {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  config      Json
+  agents      Agent[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("tools")
+}
+
+// Task management
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus @default(PENDING)
+  priority    Priority   @default(MEDIUM)
+  config      Json?
+  output      Json?
+  crewId      String
+  crew        Crew       @relation(fields: [crewId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  parentId    String?
+  parent      Task?      @relation("TaskDependency", fields: [parentId], references: [id])
+  subtasks    Task[]     @relation("TaskDependency")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("tasks")
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+// Session management
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  expiresAt    DateTime
+  data         Json
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("sessions")
+}
+
+// Resource management
+model Resource {
+  id          String   @id @default(cuid())
+  name        String
+  type        String
+  content     String
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("resources")
+}
