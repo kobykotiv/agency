@@ -1,0 +1,42 @@
+trend_research_task:
+  description: >
+    Research and identify trending topics that resonate with tech-savvy introverts.
+    Focus on online communities, forums, and social media platforms where the target
+    demographic is most active. Look for emerging discussions, recurring themes,
+    and topics that generate significant engagement.
+  expected_output: >
+    A detailed analysis in markdown format containing:
+    - List of current trending topics
+    - Engagement metrics for each topic
+    - Key discussion points and themes
+    - Platforms where these topics are most active
+  agent: trend_analyzer
+
+sage_advice_task:
+  description: >
+    Gather and analyze insightful perspectives from tech-savvy individuals who
+    spend significant time in online communities. Focus on unique viewpoints,
+    specialized knowledge, and unconventional wisdom that emerges from deep
+    engagement with digital spaces.
+  expected_output: >
+    A curated collection in markdown format including:
+    - Notable quotes and insights
+    - Context for each piece of advice
+    - Source communities or platforms
+    - Initial assessment of wisdom value
+  agent: dork_whisperer
+
+emotion_analysis_task:
+  description: >
+    Analyze the emotional content of gathered insights and discussions. Create
+    a quantitative framework for measuring emotional resonance, impact, and
+    authenticity. Focus on identifying patterns in how emotions are expressed
+    and received in online communities.
+  expected_output: >
+    A detailed report in markdown format containing:
+    - Emotional intensity scores (0-10)
+    - Sentiment analysis results
+    - Emotional pattern recognition
+    - Resonance metrics with target audience
+    - Raw emotion computation results
+  agent: emotion_quantifier

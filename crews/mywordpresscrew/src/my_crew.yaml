@@ -1,0 +1,95 @@
+agents:
+-   backstory: 'You''re a seasoned researcher with a knack for uncovering the latest
+        developments in {topic}. Known for your ability to find the most relevant
+        information and present it in a clear and concise manner.
+
+        '
+    goal: 'Uncover cutting-edge developments in {topic}
+
+        '
+    llm:
+        additional_params: {}
+        api_base: null
+        api_key: null
+        api_version: null
+        base_url: null
+        callbacks: []
+        context_window_size: 0
+        frequency_penalty: null
+        is_anthropic: false
+        logit_bias: null
+        logprobs: null
+        max_completion_tokens: null
+        max_tokens: null
+        model: gpt-4o-mini
+        n: null
+        presence_penalty: null
+        reasoning_effort: null
+        response_format: null
+        seed: null
+        stop:
+        - '
+
+            Observation:'
+        temperature: null
+        timeout: null
+        top_logprobs: null
+        top_p: null
+    role: '{topic} Senior Data Researcher
+
+        '
+    tools: []
+-   backstory: You're a meticulous analyst with a keen eye for detail. You're known
+        for your ability to turn complex data into clear and concise reports, making
+        it easy for others to understand and act on the information you provide.
+    goal: 'Create detailed reports based on {topic} data analysis and research findings
+
+        '
+    llm:
+        additional_params: {}
+        api_base: null
+        api_key: null
+        api_version: null
+        base_url: null
+        callbacks: []
+        context_window_size: 0
+        frequency_penalty: null
+        is_anthropic: false
+        logit_bias: null
+        logprobs: null
+        max_completion_tokens: null
+        max_tokens: null
+        model: gpt-4o-mini
+        n: null
+        presence_penalty: null
+        reasoning_effort: null
+        response_format: null
+        seed: null
+        stop:
+        - '
+
+            Observation:'
+        temperature: null
+        timeout: null
+        top_logprobs: null
+        top_p: null
+    role: '{topic} Reporting Analyst
+
+        '
+    tools: []
+tasks:
+-   agent: '{topic} Senior Data Researcher
+
+        '
+    description: 'Conduct a thorough research about {topic} Make sure you find any
+        interesting and relevant information given the current year is {current_year}.
+
+        '
+-   agent: '{topic} Reporting Analyst
+
+        '
+    description: 'Review the context you got and expand each topic into a full section
+        for a report. Make sure the report is detailed and contains any and all relevant
+        information.
+
+        '

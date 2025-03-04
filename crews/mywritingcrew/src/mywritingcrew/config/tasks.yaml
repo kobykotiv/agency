@@ -1,0 +1,97 @@
+parse_input_task:
+  description: >
+    Analyze the input tokens ({tokens}) and map them to potential story elements.
+    Consider genre implications, character traits, plot points, and thematic elements.
+    Create a structured mapping of tokens to story components.
+  expected_output: >
+    A detailed mapping of input tokens to story elements, including potential themes,
+    character traits, plot points, and setting details in JSON format.
+  agent: token_parser
+
+design_structure_task:
+  description: >
+    Using the token mapping, design a high-level story structure that incorporates
+    all required elements. Define major plot points, story beats, and narrative arcs.
+  expected_output: >
+    A comprehensive story outline with act structure, major plot points, and
+    narrative progression in markdown format.
+  agent: story_architect
+
+create_characters_task:
+  description: >
+    Based on the story structure and token mapping, develop detailed character
+    profiles and arcs. Ensure characters serve the story while remaining distinct
+    and compelling.
+  expected_output: >
+    Detailed character profiles including backgrounds, motivations, arcs, and
+    relationships in markdown format.
+  agent: character_developer
+
+build_world_task:
+  description: >
+    Construct the story's setting and universe details based on the structure
+    and character profiles. Ensure the world supports and enriches the narrative.
+  expected_output: >
+    Comprehensive world-building document including settings, rules, history,
+    and atmosphere in markdown format.
+  agent: world_builder
+
+develop_scenes_task:
+  description: >
+    Transform the story structure into a detailed scene sequence. Plan each scene's
+    purpose, tension, and connection to the overall narrative.
+  expected_output: >
+    Scene-by-scene breakdown with purpose, conflict, and narrative progression
+    in markdown format.
+  agent: plot_weaver
+
+create_dialogue_task:
+  description: >
+    Write key dialogue exchanges for each scene, ensuring character voice consistency
+    and natural flow. Integrate character relationships and plot advancement.
+  expected_output: >
+    Dialogue scripts for key scenes with character voice notes and context
+    in markdown format.
+  agent: dialogue_specialist
+
+analyze_themes_task:
+  description: >
+    Review the developing story and enhance thematic elements. Ensure symbols
+    and themes are consistently and meaningfully integrated.
+  expected_output: >
+    Analysis of thematic elements with suggestions for enhancement and
+    consistency in markdown format.
+  agent: theme_analyst
+
+refine_prose_task:
+  description: >
+    Polish the narrative prose, ensuring consistent style and voice while
+    maintaining readability and engagement.
+  expected_output: >
+    Polished narrative sections with style notes and revisions in markdown format.
+  agent: writing_stylist
+
+verify_consistency_task:
+  description: >
+    Review the complete story for logical consistency, continuity errors,
+    and plot holes. Flag and resolve any issues.
+  expected_output: >
+    Consistency report with identified issues and resolutions in markdown format.
+  agent: continuity_manager
+
+assess_quality_task:
+  description: >
+    Evaluate the complete story for quality, engagement, and adherence to
+    requirements. Suggest final improvements.
+  expected_output: >
+    Quality assessment report with specific improvement recommendations
+    in markdown format.
+  agent: quality_assessor
+
+update_library_task:
+  description: >
+    Analyze the completed story for reusable elements. Update the story
+    template library with new patterns and components.
+  expected_output: >
+    Library update report with new templates and patterns in markdown format.
+  agent: story_librarian

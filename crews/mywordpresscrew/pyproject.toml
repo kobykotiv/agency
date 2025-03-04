@@ -1,0 +1,23 @@
+[project]
+name = "mywordpresscrew"
+version = "0.1.0"
+description = "myWordpressCrew using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "crewai[tools]>=0.102.0,<1.0.0"
+]
+
+[project.scripts]
+mywordpresscrew = "mywordpresscrew.main:run"
+run_crew = "mywordpresscrew.main:run"
+train = "mywordpresscrew.main:train"
+replay = "mywordpresscrew.main:replay"
+test = "mywordpresscrew.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"

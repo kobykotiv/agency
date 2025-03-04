@@ -1,0 +1,27 @@
+{
+  "name": "CrewAI Cloner Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "forwardPorts": [3000, 8000],
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts",
+      "npmGlobalPackages": ["prettier", "eslint"]
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installPackages": true
+    }
+  },
+  "postCreateCommand": "bun install && cd crews/mywordpresscrew && uv pip install -e . && cd ../../crews/mywritingcrew && uv pip install -e . && cd ../../crews/personasynth && uv pip install -e . && cd ../../crews/teddy_wordpress_writer && uv pip install -e ."
+}

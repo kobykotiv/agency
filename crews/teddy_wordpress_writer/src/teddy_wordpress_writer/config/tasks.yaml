@@ -1,0 +1,52 @@
+wordpress_setup_task:
+  description: >
+    Analyze and optimize WordPress settings for maximum SEO impact and social media
+    integration. Configure essential plugins and settings to enhance content
+    visibility and sharing capabilities.
+  expected_output: >
+    A detailed configuration guide in markdown format, including:
+    - Essential WordPress settings
+    - Recommended plugins list
+    - SEO optimization configurations
+    - Social media integration setup
+  agent: wordpress_optimizer
+
+content_creation_task:
+  description: >
+    Create engaging content using the rogoldberg machine approach, incorporating
+    personal experiences and insights while maintaining SEO best practices.
+    Content should be in markdown format and optimized for both search engines
+    and social media sharing.
+  expected_output: >
+    A well-structured markdown document that includes:
+    - SEO-optimized headings and meta description
+    - Engaging semi-biographical narrative
+    - Strategic keyword placement
+    - Social media-friendly excerpts
+  agent: content_writer
+
+social_media_strategy_task:
+  description: >
+    Develop a comprehensive social media strategy for content promotion and
+    engagement. Include platform-specific recommendations and timing for
+    maximum impact.
+  expected_output: >
+    A detailed social media strategy document containing:
+    - Platform-specific content adaptations
+    - Posting schedule recommendations
+    - Engagement tactics and hashtag strategies
+    - Performance metrics and KPIs
+  agent: social_media_strategist
+
+content_review_task:
+  description: >
+    Review and refine content to ensure quality, maintain an offensiveness
+    score below 3, and verify SEO optimization. Provide feedback for
+    improvements while preserving the authentic voice.
+  expected_output: >
+    A comprehensive review report including:
+    - Content quality assessment
+    - SEO optimization suggestions
+    - Offensiveness score evaluation
+    - Specific improvement recommendations
+  agent: content_editor
